@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,8 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.result-card {
+  border: 1px solid black;
 }
