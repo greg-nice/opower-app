@@ -1,0 +1,121 @@
+.results-grid {
+    gap:24px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    box-sizing: border-box;
+    height:100%;
+    padding: 12px;
+    background-color: #fbf9f8;
+    padding-bottom:48px;
+}
+
+.result-card {
+  border: 1px solid darkgray;
+  padding: 12px;
+  background-color:#ecf6f9;
+}
+
+.data-category {
+  font-weight: bold;
+}
+
+.data-subcategory {
+  font-weight:bold;
+  color:darkmagenta;
+}
+
+.top-container {
+    background-color: #fbf9f8;
+    color: rgb(43, 43, 43);
+}
+
+.section-container {
+    padding: 12px;
+}
+
+.section-container.link {
+    color: blue;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.spacer {
+    background-color: #fbf9f8;
+    min-height: 100vh;
+}
+
+/* .result-card {
+    cursor:pointer;
+} */
+
+.result-name {
+    font-weight: bold;
+    color: green;
+    cursor:pointer;
+}
+
+.result-name.detailview {
+    cursor:default;
+}
+
+.one-result-modal {
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background-color: rgba(0,0,0,.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.one-result-content {
+    background-color:white;
+    border-radius: 8px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 30%);
+    min-height: 300px;
+    max-height: 80vh;
+    min-width: 375px;
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+.small-text {
+    /* font-size: smaller; */
+    color: darkgray
+}
+
+.float {
+    visibility: hidden;
+    position: absolute;
+    background-color: white;
+    padding:1rem;
+}
+
+.floatable {
+    cursor:pointer;
+}
+
+.parameter-name {
+    font-weight: bold;
+    color: darkmagenta;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: left;
+}
+
+.errors-list {
+    color:red;
+}
