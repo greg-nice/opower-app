@@ -12,6 +12,8 @@
     const [oneResultDetails, setOneResultDetails] = useState(null);
     const [showOneResult, setShowOneResult] = useState(false);
     const [detailsLoaded, setDetailsLoaded] = useState(false);
+    const [filterDetailBy, setFilterDetailBy] = useState("all");
+    const [detailFiltered, setDetailFiltered] = useState(null);
 
     const validate = () => {
         const validationErrors = [];
@@ -32,7 +34,20 @@
             setFiltered(results.filter(result => result.entity === filterBy));
             return;
         }
-    }, [results, filterBy])
+    }, [results, filterBy]);
+
+    useEffect(() => {
+        if (oneResultDetails === null) {
+            return
+        }
+        if (filterDetailBy === "all") {
+            setDetailFiltered(oneResultDetails);
+            return;
+        } else {
+            setDetailFiltered(oneResultDetails.filter(detail => detail.parameter === filterDetailBy));
+            return;
+        }
+    }, [oneResultDetails, filterDetailBy]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -69,6 +84,8 @@
         setOneResult(null);
         setOneResultDetails(null);
         setDetailsLoaded(false);
+        setFilterDetailBy("all");
+        setDetailFiltered(null);
     };
 
     useEffect(() => {
@@ -193,36 +210,50 @@
             }
             {showOneResult &&
                 <div className="one-result-modal">
-                    <div className="one-result-content">
+                    <div className="one-result-content" onClick={(e) => e.stopPropagation()}>
                         <div className="result-name detailview">{oneResult.name}</div>
                         <div><span className='data-category'>Id: </span>{oneResult.id}</div>
                         <br></br>
                         {!detailsLoaded && <div>Data is loading...</div>}
-                        {detailsLoaded && 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Parameter</th>
-                                        <th>Value</th>
-                                        <th>Unit</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-body">
-                                {oneResultDetails && oneResultDetails.length > 0 && oneResultDetails.map((measurement, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td>{measurement.date.utc.slice(0,10)}</td>
-                                            <td>{measurement.date.utc.slice(11,16)}</td>
-                                            <td>{measurement.parameter}</td>
-                                            <td>{measurement.value}</td>
-                                            <td>{measurement.unit}</td>
+                        {detailsLoaded &&
+                            <div>
+                                <div className="section-container">
+                                    <label htmlFor="entity-select">Filter by parameter type: </label>
+                                    <select name="entities" id="entity-select" onChange={(e) => setFilterDetailBy(e.target.value)} value={filterDetailBy}>
+                                        <option value="all">--Please choose an option--</option>
+                                        <option value="pm1">pm1</option>
+                                        <option value="um010">um010</option>
+                                        <option value="pm10">pm10</option>
+                                        <option value="um100">um100</option>
+                                        <option value="pm25">pm25</option>
+                                        <option value="um025">um025</option>
+                                    </select>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Parameter</th>
+                                            <th>Value</th>
+                                            <th>Unit</th>
                                         </tr>
-                                    )
-                                })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="table-body">
+                                    {oneResultDetails && detailFiltered.length > 0 && detailFiltered.map((measurement, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>{measurement.date.utc.slice(0,10)}</td>
+                                                <td>{measurement.date.utc.slice(11,16)}</td>
+                                                <td>{measurement.parameter}</td>
+                                                <td>{measurement.value}</td>
+                                                <td>{measurement.unit}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                     </div>
                 </div>
